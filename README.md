@@ -1,2 +1,51 @@
+![Cherry Servers](https://www.serchen.com/images/thumbnails/large/54097.jpg)
 # CherryServers-Ansible-OpenFaaS-example
-Ansible playbook to automatically deploy OpenFaaS with Docker Swarm on Cherryservers infrastructure
+This example will use Ubuntu as the base operating system to deploy one master node and a user-specified amount (e.g. two) worker nodes. Those will then automatically join the master node via public IP address and token combination. 
+# Prerequisites
+<ul>
+  <li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/" target="_blank">Docker CE</a></li>
+  <li><a href="https://www.ansible.com/" target="_blank">Ansible</a></li>
+  <li><a href="https://stedolan.github.io/jq/download/" target="_blank">JQ package for the host PC/laptop</a></li>
+</ul>
+
+# Before you start
+You will need a <a href="https://portal.cherryservers.com" target="_blank">cherrservers account</a> with the credit in balance to order services with hourly billing. 
+
+Create API key <a href="https://portal.cherryservers.com/#/settings/api-keys/" target="_blank">https://portal.cherryservers.com/#/settings/api-keys/</a> and export it to your working terminal session<br>
+```
+export CHERRY_AUTH_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9"
+```
+Configure the global variables on the "group_vars/all.yml" file. 
+```
+project_id: 88513
+plan_id: 94
+region: EU-East-1
+number_of_masters: 1
+number_of_workers: 2
+image: 'Ubuntu 16.04 64bit'
+key_file: '/home/lukas/.ssh/id_rsa'
+key_file_pub: "{{ key_file }}.pub"
+```
+
+# Adding your SSH key to CherryServers
+
+Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. Please note that by this time you should already have exported your CherryServers API token, otherwise the none of the playbooks playbooks will run.
+
+# How to use
+
+Once you're ready, execute "ansible-playbook deploy_openfaas.yml" playbook. The full process may take up to 20 minutes to complete.
+
+It will first deploy the master node and register all the necessary variables. Once that's done, the specified amount of worker servers will follow to deploy. 
+
+The worker servers will then be automatically added to the Docker swarm. When the playbook finishes, log into the master node, change directory to "~/faas" and run the "deploy_default_stack.sh" script. 
+
+This will install the default OpenFaaS function stack for you. Use the provided login credentials to access the master GUI control panel at http://$master_ip:8080 and begin working.
+
+Good luck!
+
+
+# When no longer needed
+```
+ansible-playbook server_terminate.yml
+```
+You may need to edit the playbook accord to your preference to terminate all servers succesfully. 
