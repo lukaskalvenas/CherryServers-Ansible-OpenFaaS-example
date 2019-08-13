@@ -17,5 +17,5 @@
       hostname:
         -  worker.node%02d
       count: 2
-      count_offset: 2    
+      count_offset: 1    
       state: absent
