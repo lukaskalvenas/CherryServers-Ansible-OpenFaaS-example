@@ -55,4 +55,4 @@ Good luck!
 ```
 ansible-playbook server_terminate.yml
 ```
-You may need to edit the playbook according to your preference to terminate all servers succesfully. 
+You may need to edit the playbook according to your preference to terminate all servers succesfully. Keep in mind that all Docker swarm members will be terminated and the data will get permanently wiped.
