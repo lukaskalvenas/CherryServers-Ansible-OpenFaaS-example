@@ -1,0 +1,11 @@
+---
+
+- name: Cherry Servers API
+  connection: local
+  hosts: localhost
+  tasks:
+  - name: Add SSH key
+    cherryservers_sshkey:
+      label: "lukas"
+      key_file: "{{ key_file }}.pub"
+      state: present

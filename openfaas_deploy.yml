@@ -1,0 +1,121 @@
+---
+- name: OpenFaaS deployment on Cherry Servers
+  connection: local
+  gather_facts: true
+  remote_user: root
+  hosts: localhost
+  tasks:
+  - name: Deploying master node
+    cherryservers_server:
+      hostname:
+        - master.node%02d
+      plan_id: "{{ plan_id }}"
+      project_id: "{{ project_id }}"
+      image: "{{ image }}"
+      region: "{{ region }}"
+      state: active
+      count: "{{ number_of_masters }}"
+      count_offset: 1
+      ssh_label:
+        - lukas
+    register: master
+
+  - name: Register master node
+    add_host:
+      hostname: "{{ master.server[0].ip_addresses[0].address }}"
+      group: "master_server"
+   
+  - set_fact: master_server_ip="{{ master.server[0].ip_addresses[0].address }}"
+
+- name: Preparing the master node and registering necessary variables
+  connection: ssh
+  remote_user: root
+  hosts: master_server
+  tasks:
+  - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;      
+  - shell: apt update ; apt upgrade -y ; apt install curl -y
+  - shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+  - apt:
+      name: docker-ce
+      update_cache: yes
+      state: latest
+  - apt:
+      name: jq
+      state: present
+  - copy: src=/etc/ansible/install-openfaas.sh dest=/tmp/install-openfaas.sh mode=644
+  - command: sh /tmp/install-openfaas.sh
+  - shell: ls -1 /tmp/
+    register: files
+  - file: path=/tmp/{{ item }} state=absent
+    with_items: "{{ files.stdout_lines }}"
+  - shell: "docker swarm init --advertise-addr {{ hostvars.localhost.groups.master_server[0] }}"
+  - shell: docker swarm join-token -q worker
+    register: worker_token
+  - debug:
+      msg: "{{ hostvars.localhost.groups.master_server[0] }}"
+  - debug: 
+      msg: "{{ worker_token.stdout }}"
+  - add_host:
+      name: "worker_token"
+      token: "{{ worker_token.stdout }}"
+       
+- name: Deploying the worker nodes
+  connection: ssh
+  gather_facts: true
+  hosts: localhost
+  remote_user: root
+  tasks:
+  - name: Deploying worker server(s)
+    cherryservers_server:
+      hostname:
+        - worker.node%02d
+      plan_id: "{{ plan_id }}"
+      project_id: "{{ project_id }}"
+      image: "{{ image }}"
+      region: "{{ region }}"
+      state: active
+      count: "{{ number_of_workers }}"
+      count_offset: 1
+      ssh_label:
+        - lukas
+    register: worker
+
+  - name: Register first worker node
+    add_host:
+      hostname: "{{ worker.server[0].ip_addresses[0].address }}"
+      group: "worker_server"
+  - name: Register other worker nodes
+    add_host:
+      hostname: "{{ worker.server[item|int].ip_addresses[0].address }}"
+      group: "worker_server"
+    with_sequence: "start=1 end={{ number_of_workers -1 }}"
+    
+- name: Preparing the worker node(s)
+  connection: ssh
+  remote_user: root
+  hosts: worker_server
+  tasks:
+  - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done
+  - debug:
+      msg: "Master server IP is {{ hostvars.localhost.groups.master_server[0] }}"
+  - debug:
+      msg: "Worker token is {{ hostvars['worker_token']['token'] }} "    
+  - shell: apt update ; apt upgrade -y ; apt install curl -y
+  - shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+  - apt:
+      name: docker-ce
+      state: latest
+  - apt:
+      name: jq
+      state: present
+  - command: "docker swarm join --token {{ hostvars['worker_token']['token'] }} {{ hostvars.localhost.groups.master_server[0] }}:2377"
+  - shell: ls -1 /tmp/
+    register: files2
+  - file: path=/tmp/{{ item }} state=absent
+    with_items: "{{ files2.stdout_lines }}"

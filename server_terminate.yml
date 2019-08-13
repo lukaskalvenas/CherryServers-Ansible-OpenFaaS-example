@@ -1,0 +1,21 @@
+---
+- name: Cherry Servers API module
+  connection: local
+  hosts: localhost
+  tasks:
+  - name: Terminate servers
+    cherryservers_server:
+      project_id: '{{ project_id }}'
+      hostname:
+        -  master.node%02d
+      count: 1
+      count_offset: 1    
+      state: absent
+  - name: Terminate servers
+    cherryservers_server:
+      project_id: '{{ project_id }}'
+      hostname:
+        -  worker.node%02d
+      count: 2
+      count_offset: 2    
+      state: absent
