@@ -11,7 +11,7 @@ This example will use Ubuntu as the base operating system to deploy one master n
     pip install cherry-python
   ```
 
-You will need to download <a href="https://github.com/cherryservers/cherry-ansible-module/tree/master/cherryservers">this</a> directory into the<b>ansible/library</b> subdirectory of this project.
+You will need to download <a href="https://github.com/cherryservers/cherry-ansible-module/tree/master/cherryservers">this</a> directory into the <b>ansible/library</b> subdirectory of this project.
 This is the Cherry Servers Ansible Module that we will use to interact with Cherry Server's API. The ansible.cfg file in the ansible directory has a library entry that points to the library subdirectory and tells ansible where to find our custom modules.
 </ul>
 
