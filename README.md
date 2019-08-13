@@ -36,7 +36,7 @@ key_file_pub: "{{ key_file }}.pub"
 
 # Adding your SSH key to CherryServers
 
-Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. Please note that by this time you should already have exported your CherryServers API token, otherwise the none of the playbooks playbooks will run.
+Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. Please note that by this time you should already have exported your CherryServers API token, otherwise the none of the playbooks will run.
 
 # How to use
 
