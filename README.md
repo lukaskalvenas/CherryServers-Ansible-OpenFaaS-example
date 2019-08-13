@@ -8,7 +8,7 @@ This example will use Ubuntu as the base operating system to deploy one master n
   <li>The Cherry Servers module connects to Cherry Servers Public API via cherry-python package. You need to install it with pip (this might need to be done as sudo):</li>
   
   ```
-    pip install cherry-python
+    pip install cherry-python --user
   ```
 
 You will need to download <a href="https://github.com/cherryservers/cherry-ansible-module/tree/master/cherryservers">this</a> directory into the <b>ansible/library</b> subdirectory of this project.
