@@ -18,7 +18,7 @@ This is the Cherry Servers Ansible Module that we will use to interact with Cher
 # Before you start
 You will need a <a href="https://portal.cherryservers.com" target="_blank">cherrservers account</a> with credit in balance to order services with hourly billing. 
 
-Create API key <a href="https://portal.cherryservers.com/#/settings/api-keys/" target="_blank">https://portal.cherryservers.com/#/settings/api-keys/</a> and export it to your working terminal session<br>
+Create an API key at <a href="https://portal.cherryservers.com/#/settings/api-keys/" target="_blank">https://portal.cherryservers.com/#/settings/api-keys/</a> and export it to your working terminal session<br>
 ```
 export CHERRY_AUTH_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9"
 ```
