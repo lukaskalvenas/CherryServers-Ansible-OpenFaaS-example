@@ -5,6 +5,14 @@ This example will use Ubuntu as the base operating system to deploy one master n
 <ul>
   <li><a href="https://www.ansible.com/" target="_blank">Ansible</a></li>
   <li><a href="https://stedolan.github.io/jq/download/" target="_blank">JQ package for the host PC/laptop</a></li>
+  <li>The Cherry Servers module connects to Cherry Servers Public API via cherry-python package. You need to install it with pip (this might need to be done as sudo):</li>
+  
+  ```
+    pip install cherry-python
+  ```
+
+You will need to download <a href="https://github.com/cherryservers/cherry-ansible-module/tree/master/cherryservers">this</a> directory into the<b>ansible/library</b> subdirectory of this project.
+This is the Cherry Servers Ansible Module that we will use to interact with Cherry Server's API. The ansible.cfg file in the ansible directory has a library entry that points to the library subdirectory and tells ansible where to find our custom modules.
 </ul>
 
 # Before you start
