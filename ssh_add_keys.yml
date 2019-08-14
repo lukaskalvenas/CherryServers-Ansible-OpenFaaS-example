@@ -1,5 +1,4 @@
 ---
-
 - name: Cherry Servers API
   connection: local
   hosts: localhost

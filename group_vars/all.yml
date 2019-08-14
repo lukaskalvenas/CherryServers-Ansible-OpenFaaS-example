@@ -1,7 +1,8 @@
-project_id: 88331
-plan_id: 94
+project_id: 88687
+plan_id: 161
 region: EU-East-1
-number_of_servers: 3
+number_of_masters: 1
+number_of_workers: 2
 image: 'Ubuntu 16.04 64bit'
-key_file: '~/.ssh/id_rsa'
+key_file: '/home/lukas/.ssh/id_rsa'
 key_file_pub: "{{ key_file }}.pub"
