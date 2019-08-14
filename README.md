@@ -1,7 +1,7 @@
 ![Cherry Servers](https://www.serchen.com/images/thumbnails/large/54097.jpg)
 # CherryServers-Ansible-OpenFaaS-example
 This example will use Ubuntu as the base operating system to deploy one master node and a user-specified amount (e.g. two) worker nodes via Docker swarm. Those will then automatically join the master node via public IP address and Docker swarm token combination. 
-# Prerequisites
+# Requirements
 <ul>
   <li><a href="https://www.ansible.com/" target="_blank">Ansible</a></li>
   <li><a href="https://stedolan.github.io/jq/download/" target="_blank">JQ package for the host PC/laptop</a></li>
