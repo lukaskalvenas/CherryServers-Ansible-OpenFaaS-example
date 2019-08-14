@@ -116,5 +116,5 @@
   - file: path=/tmp/{{ item }} state=absent
     with_items: "{{ files2.stdout_lines }}"
   - debug:
-      msg: "Master server IP is {{ hostvars.localhost.groups.master_server[0] }}"
+      msg: "Playbook complete. Master server IP is {{ hostvars.localhost.groups.master_server[0] }}"
     run_once: true
