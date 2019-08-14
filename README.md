@@ -34,6 +34,12 @@ key_file: '/home/lukas/.ssh/id_rsa'
 key_file_pub: "{{ key_file }}.pub"
 ```
 
+Last, but not least, make sure that all bash scripts in the Terraform working directory have an "execute" flag:
+
+```
+sudo chmod +x *.sh
+```
+
 # Adding your SSH key to CherryServers
 
 Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
