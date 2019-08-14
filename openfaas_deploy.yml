@@ -117,5 +117,4 @@
     with_items: "{{ files2.stdout_lines }}"
   - debug:
       msg: "Master server IP is {{ hostvars.localhost.groups.master_server[0] }}"
-  - debug:
-      msg: "Worker servers are {{ worker.server[ ].ip_addresses[0].address }}"    
+    run_once: true
