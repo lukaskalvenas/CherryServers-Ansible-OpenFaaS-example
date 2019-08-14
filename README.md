@@ -36,10 +36,11 @@ Last, but not least, make sure that all bash scripts in the Ansible working dire
 ```
 sudo chmod +x *.sh
 ```
+Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
 
 # Adding your SSH key to CherryServers
 
-Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
+Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. 
 
 # How to use
 
