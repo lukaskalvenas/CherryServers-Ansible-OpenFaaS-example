@@ -34,7 +34,7 @@ key_file: '/home/lukas/.ssh/id_rsa'
 key_file_pub: "{{ key_file }}.pub"
 ```
 
-Last, but not least, make sure that all bash scripts in the Terraform working directory have an "execute" flag:
+Last, but not least, make sure that all bash scripts in the Ansible working directory have an "execute" flag:
 
 ```
 sudo chmod +x *.sh
