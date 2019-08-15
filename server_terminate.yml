@@ -3,19 +3,19 @@
   connection: local
   hosts: localhost
   tasks:
-  - name: Terminate servers
+  - name: Terminating master node(s)
     cherryservers_server:
       project_id: '{{ project_id }}'
       hostname:
         -  master.node%02d
-      count: 1
+      count: "{{ number_of_masters }}"
       count_offset: 1    
       state: absent
-  - name: Terminate servers
+  - name: Terminating worker node(s)
     cherryservers_server:
       project_id: '{{ project_id }}'
       hostname:
         -  worker.node%02d
-      count: 2
+      count: "{{ number_of_workers}}"
       count_offset: 1    
       state: absent
