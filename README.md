@@ -45,7 +45,7 @@ Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to Cher
 
 # How to use
 
-Once you're ready, execute "ansible-playbook deploy_openfaas.yml" playbook. The full process may take up to 20 minutes to complete. For detailed playbook output, run "ansible-playbook -vvv deploy_openfaas.yml"
+Once you're ready, execute "ansible-playbook openfaas_deploy.yml" playbook. The full process may take up to 20 minutes to complete. For detailed playbook output, run "ansible-playbook -vvv deploy_openfaas.yml"
 
 It will first deploy the master node and register all the necessary variables. Once that's done, the specified amount of worker servers will follow to deploy. 
 
