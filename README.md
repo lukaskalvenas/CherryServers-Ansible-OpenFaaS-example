@@ -35,7 +35,6 @@ Last, but not least, make sure that all bash scripts in the Ansible working dire
 
 ```
 sudo chmod +x *.sh
-
 ```
 Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
 
