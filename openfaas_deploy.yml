@@ -33,7 +33,7 @@
   hosts: master_server
   tasks:
   - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;      
-  - shell: apt update ; apt upgrade -y ; apt install curl -y
+  - shell: apt update ; apt install curl -y
   - shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
