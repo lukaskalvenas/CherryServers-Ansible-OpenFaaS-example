@@ -22,7 +22,7 @@ export CHERRY_AUTH_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9"
 Configure the global variables on the "group_vars/all.yml" file. Download and run the <a href="https://github.com/cherryservers/cherryctl" target="_blank">cherryctl</a> script to get a list of server plan IDs.
 ```
 project_id: 88513
-plan_id: 94
+plan_id: 161
 region: EU-East-1
 number_of_masters: 1
 number_of_workers: 2
