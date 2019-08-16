@@ -7,7 +7,7 @@
     cherryservers_server:
       project_id: '{{ project_id }}'
       hostname:
-        -  master.node%02d
+        -  "{{ master_hostname }}"
       count: "{{ number_of_masters }}"
       count_offset: 1    
       state: absent
@@ -15,7 +15,7 @@
     cherryservers_server:
       project_id: '{{ project_id }}'
       hostname:
-        -  worker.node%02d
+        -  "{{ worker_hostname }}"
       count: "{{ number_of_workers}}"
       count_offset: 1    
       state: absent
