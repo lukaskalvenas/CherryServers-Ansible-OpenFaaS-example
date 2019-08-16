@@ -8,7 +8,7 @@
   - name: Deploying master node
     cherryservers_server:
       hostname:
-        - master.node%02d
+        - "{{ master_hostname }}"
       plan_id: "{{ plan_id }}"
       project_id: "{{ project_id }}"
       image: "{{ image }}"
@@ -71,7 +71,7 @@
   - name: Deploying worker server(s)
     cherryservers_server:
       hostname:
-        - worker.node%02d
+        - "{{ worker_hostname }}"
       plan_id: "{{ plan_id }}"
       project_id: "{{ project_id }}"
       image: "{{ image }}"
