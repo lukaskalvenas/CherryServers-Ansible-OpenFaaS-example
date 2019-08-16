@@ -29,6 +29,8 @@ number_of_workers: 2
 image: 'Ubuntu 16.04 64bit'
 key_file: '/home/lukas/.ssh/id_rsa'
 key_file_pub: "{{ key_file }}.pub"
+master_hostname: master.node%02d
+worker_hostname: worker.node%02d
 ```
 
 Last, but not least, make sure that all bash scripts in the Ansible working directory have an "execute" flag:
