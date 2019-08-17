@@ -22,6 +22,7 @@ export CHERRY_AUTH_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9"
 ```
 Configure the global variables on the "group_vars/all.yml" file. Download and run the <a href="https://github.com/cherryservers/cherryctl" target="_blank">cherryctl</a> script to get a list of server plan IDs.
 ```
+$ vim Downloads/CherryServers-Ansible-OpenFaaS-example-master/group_vars/all.yml
 project_id: 88513
 plan_id: 161
 region: EU-East-1
