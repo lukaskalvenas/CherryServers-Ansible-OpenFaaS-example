@@ -65,6 +65,27 @@ localhost                  : ok=2    changed=1    unreachable=0    failed=0
 ```
 # Running the deployment playbook
 
+Before running the playbook, make sure you have the necessary files in the Ansible's working directory
+```
+Downloads/CherryServers-Ansible-OpenFaaS-example-master$ tree .
+.
+├── ansible.cfg
+├── docker-ce_17.12.0_ce-0_ubuntu_amd64.deb
+├── group_vars
+│   └── all.yml
+├── hosts
+├── install-openfaas.sh
+├── library
+│   ├── cherryservers_ips.py
+│   ├── cherryservers_server.py
+│   └── cherryservers_sshkey.py
+├── openfaas_deploy.yml
+├── README.md
+├── server_terminate.yml
+└── ssh_add_keys.yml
+
+2 directories, 12 files
+```
 Once you're ready, execute "ansible-playbook openfaas_deploy.yml" playbook. The full process may take up to 20 minutes to complete. For detailed playbook output, run "ansible-playbook -vvv openfaas_deploy.yml"
 ```
 $ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
