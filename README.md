@@ -65,7 +65,7 @@ localhost                  : ok=2    changed=1    unreachable=0    failed=0
 ```
 # Running the deployment playbook
 
-Before running the playbook, make sure you have the necessary files in the Ansible's working directory
+Before running the playbook, make sure you have the necessary files in Ansible's working directory
 ```
 Downloads/CherryServers-Ansible-OpenFaaS-example-master$ tree .
 .
