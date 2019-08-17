@@ -37,7 +37,7 @@ worker_hostname: worker.node%02d
 Last, but not least, make sure that all bash scripts in the Ansible working directory have an "execute" flag:
 
 ```
-$ cd CherryServers-Ansible-OpenFaaS-example-master/
+$ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
 sudo chmod +x *.sh
 ```
 Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
