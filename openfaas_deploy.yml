@@ -33,20 +33,13 @@
   hosts: master_server
   tasks:
   - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;      
-  - shell: apt update; apt upgrade -y; apt install curl -y
-  - shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - shell: sudo apt-key fingerprint 0EBFCD88
-  - apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
-      state: present
-  - apt:
-      name: docker-ce
-      update_cache: yes
-      state: latest
+  - shell: apt update; apt install curl -y
+  - copy: src=./docker-ce_17.12.0_ce-0_ubuntu_amd64.deb dest=/tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb mode=644
+  - shell: dpkg -i /tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb; apt install -f -y
   - apt:
       name: jq
       state: present
-  - copy: src=/etc/ansible/install-openfaas.sh dest=/tmp/install-openfaas.sh mode=644
+  - copy: src=./install-openfaas.sh dest=/tmp/install-openfaas.sh mode=644
   - command: sh /tmp/install-openfaas.sh
   - shell: ls -1 /tmp/
     register: files
@@ -100,14 +93,9 @@
   hosts: worker_server
   tasks:
   - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done   
-  - shell: apt update ; apt upgrade -y ; apt install curl -y
-  - shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
-      state: present
-  - apt:
-      name: docker-ce
-      state: latest
+  - shell: apt update ; apt install curl -y
+  - copy: src=./docker-ce_17.12.0_ce-0_ubuntu_amd64.deb dest=/tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb mode=644
+  - shell: dpkg -i /tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb; apt install -f -y
   - apt:
       name: jq
       state: present
