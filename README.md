@@ -4,6 +4,7 @@ This example will use Ubuntu as the base operating system to deploy one master n
 # Requirements
 <ul>
   <li><a href="https://www.ansible.com/" target="_blank">Ansible</a></li>
+  <li><a href="https://download.docker.com/linux/ubuntu/dists/zesty/pool/stable/amd64/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb" target="_blank">Docker CE.</a> Donwload the file into Terraform's working directory.</li>
   <li><a href="https://stedolan.github.io/jq/download/" target="_blank">JQ package for the host PC/laptop</a></li>
   <li>The Cherry Servers module connects to Cherry Servers Public API via cherry-python package. You need to install it with pip (this might need to be done as sudo):</li>
   
