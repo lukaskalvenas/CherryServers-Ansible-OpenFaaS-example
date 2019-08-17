@@ -37,6 +37,7 @@ worker_hostname: worker.node%02d
 Last, but not least, make sure that all bash scripts in the Ansible working directory have an "execute" flag:
 
 ```
+$ cd CherryServers-Ansible-OpenFaaS-example-master/
 sudo chmod +x *.sh
 ```
 Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
@@ -44,10 +45,49 @@ Please note that by this time you should already have exported your CherryServer
 # Adding your SSH key to CherryServers
 
 Run  "ansible-playbook ssh_add_keys.yml" playbook to upload your SSH key to CherryServers. 
+```
+$ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
+$ ansible-playbook ssh_add_keys.yml 
+ [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not
+match 'all'
 
-# How to use
+PLAY [Cherry Servers API] ***************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************
+ok: [localhost]
+
+TASK [Add SSH key] **********************************************************************************************
+changed: [localhost]
+
+PLAY RECAP ******************************************************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0   
+```
+# Running the deployment playbook
 
 Once you're ready, execute "ansible-playbook openfaas_deploy.yml" playbook. The full process may take up to 20 minutes to complete. For detailed playbook output, run "ansible-playbook -vvv openfaas_deploy.yml"
+```
+$ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
+$ ansible-playbook openfaas_deploy.yml 
+ [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not
+match 'all'
+
+
+PLAY [OpenFaaS deployment on Cherry Servers] ********************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************
+ok: [localhost]
+
+TASK [Deploying master node] ************************************************************************************
+changed: [localhost]
+
+TASK [Register master node] *************************************************************************************
+changed: [localhost]
+
+TASK [set_fact] *************************************************************************************************
+ok: [localhost]
+
+PLAY [Preparing the master node and registering necessary variables] ***************
+```
 
 It will first deploy the master node and register all the necessary variables. Once that's done, the specified amount of worker servers will follow to deploy. 
 
@@ -60,6 +100,26 @@ Good luck!
 
 # When no longer needed
 ```
-ansible-playbook server_terminate.yml
+$ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
+$ ansible-playbook server_terminate.yml
+
+ [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not
+match 'all'
+
+
+PLAY [Cherry Servers API module] ********************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************
+ok: [localhost]
+
+TASK [Terminating master node(s)] *******************************************************************************
+changed: [localhost]
+
+TASK [Terminating worker node(s)] *******************************************************************************
+changed: [localhost]
+
+PLAY RECAP ******************************************************************************************************
+localhost                  : ok=3    changed=2    unreachable=0    failed=0 
+
 ```
 You may need to edit the playbook according to your preference to terminate all servers succesfully. Keep in mind that all Docker swarm members will be terminated and the data will get permanently wiped.
