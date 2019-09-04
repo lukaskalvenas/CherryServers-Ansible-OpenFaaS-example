@@ -32,26 +32,28 @@
   remote_user: root
   hosts: master_server
   tasks:
-  - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;      
-  - shell: apt update; apt install curl -y
-  - copy: src=./docker-ce_17.12.0_ce-0_ubuntu_amd64.deb dest=/tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb mode=644
-  - shell: dpkg -i /tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb; apt install -f -y
+  - shell: "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;"      
+  - shell: "apt update; apt install curl -y ; apt install git -y"
   - apt:
       name: jq
       state: present
-  - copy: src=./install-openfaas.sh dest=/tmp/install-openfaas.sh mode=644
-  - command: sh /tmp/install-openfaas.sh
-  - shell: ls -1 /tmp/
-    register: files
-  - file: path=/tmp/{{ item }} state=absent
-    with_items: "{{ files.stdout_lines }}"
-  - shell: "docker swarm init --advertise-addr {{ hostvars.localhost.groups.master_server[0] }}"
-  - shell: docker swarm join-token -q worker
+  - get_url:
+      url: https://download.docker.com/linux/ubuntu/dists/zesty/pool/stable/amd64/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+      dest: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+  - apt:
+      deb: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+      state: present
+  - git:
+      repo: https://github.com/openfaas/faas.git
+      dest: /faas
+  - get_url:
+      url: https://cli.openfaas.com
+      dest: /faas-cli.sh
+      mode: o=x
+  - command: "sh /faas-cli.sh"
+  - command: "docker swarm init --advertise-addr {{ hostvars.localhost.groups.master_server[0] }}"
+  - command: "docker swarm join-token -q worker"
     register: worker_token
-  - debug:
-      msg: "{{ hostvars.localhost.groups.master_server[0] }}"
-  - debug: 
-      msg: "{{ worker_token.stdout }}"
   - add_host:
       name: "worker_token"
       token: "{{ worker_token.stdout }}"
@@ -92,18 +94,18 @@
   remote_user: root
   hosts: worker_server
   tasks:
-  - shell: while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done   
-  - shell: apt update ; apt install curl -y
-  - copy: src=./docker-ce_17.12.0_ce-0_ubuntu_amd64.deb dest=/tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb mode=644
-  - shell: dpkg -i /tmp/docker-ce_17.12.0_ce-0_ubuntu_amd64.deb; apt install -f -y
+  - shell: "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;"
+  - shell: "apt update; apt install curl -y ; apt install git -y"
   - apt:
       name: jq
       state: present
+  - get_url:
+      url: https://download.docker.com/linux/ubuntu/dists/zesty/pool/stable/amd64/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+      dest: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+  - apt:
+      deb: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
+      state: present
   - command: "docker swarm join --token {{ hostvars['worker_token']['token'] }} {{ hostvars.localhost.groups.master_server[0] }}:2377"
-  - shell: ls -1 /tmp/
-    register: files2
-  - file: path=/tmp/{{ item }} state=absent
-    with_items: "{{ files2.stdout_lines }}"
   - debug:
       msg: "Playbook complete. Master server IP is {{ hostvars.localhost.groups.master_server[0] }}"
     run_once: true
