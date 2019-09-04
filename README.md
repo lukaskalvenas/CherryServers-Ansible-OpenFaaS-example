@@ -34,12 +34,6 @@ master_hostname: master.node%02d
 worker_hostname: worker.node%02d
 ```
 
-Last, but not least, make sure that all bash scripts in the Ansible working directory have an "execute" flag:
-
-```
-$ cd Downloads/CherryServers-Ansible-OpenFaaS-example-master/
-sudo chmod +x *.sh
-```
 Please note that by this time you should already have exported your CherryServers API token, otherwise none of the playbooks will run.
 
 # Adding your SSH key to CherryServers
@@ -69,11 +63,9 @@ Before running the playbook, make sure you have the necessary files in Ansible's
 Downloads/CherryServers-Ansible-OpenFaaS-example-master$ tree .
 .
 ├── ansible.cfg
-├── docker-ce_17.12.0_ce-0_ubuntu_amd64.deb
 ├── group_vars
 │   └── all.yml
 ├── hosts
-├── install-openfaas.sh
 ├── library
 │   ├── cherryservers_ips.py
 │   ├── cherryservers_server.py
@@ -83,7 +75,7 @@ Downloads/CherryServers-Ansible-OpenFaaS-example-master$ tree .
 ├── server_terminate.yml
 └── ssh_add_keys.yml
 
-2 directories, 12 files
+2 directories, 10 files
 ```
 Once you're ready, execute "ansible-playbook openfaas_deploy.yml" playbook. The full process may take up to 20 minutes to complete. For detailed playbook output, run "ansible-playbook -vvv openfaas_deploy.yml"
 ```
@@ -112,7 +104,7 @@ PLAY [Preparing the master node and registering necessary variables] ***********
 
 It will first deploy the master node and register all the necessary variables. Once that's done, the specified amount of worker servers will follow to deploy. 
 
-The worker servers will then be automatically added to the Docker swarm. When the playbook finishes, log into the master node, change the working directory to "~/faas" and run the following commands
+The worker servers will then be automatically added to the Docker swarm. When the playbook finishes, log into the master node, change the working directory to "/faas" and run the following commands
 ```
 git checkout 0.8.9
 ./deploy_stack.sh
