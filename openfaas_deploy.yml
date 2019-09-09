@@ -34,7 +34,6 @@
   tasks:
   - shell: "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;"      
   - shell: sudo apt update
-  - shell: sudo apt update
   - apt:
       name: "{{ package }}"   
     vars:
