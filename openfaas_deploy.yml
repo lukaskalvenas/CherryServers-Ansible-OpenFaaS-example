@@ -33,16 +33,15 @@
   hosts: master_server
   tasks:
   - shell: "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;"      
+  - shell: sudo apt update
+  - shell: sudo apt update
   - apt:
-    update_cache: yes
-  - apt:
-      name: "{{ packages }}"
-    vars:  
+      name: "{{ package }}"   
+    vars:
       packages:
-      - git
-      - curl
-      - jq
-    state: present
+        - git
+        - curl
+        - jq
   - get_url:
       url: https://download.docker.com/linux/ubuntu/dists/zesty/pool/stable/amd64/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
       dest: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
@@ -100,16 +99,14 @@
   remote_user: root
   hosts: worker_server
   tasks:
+  - shell: sudo apt update
   - apt:
-    update_cache: yes
-  - apt:
-      name: "{{ packages }}"
-    vars:  
+      name: "{{ package }}"   
+    vars:
       packages:
-      - git
-      - curl
-      - jq
-    state: present
+        - git
+        - curl
+        - jq
   - get_url:
       url: https://download.docker.com/linux/ubuntu/dists/zesty/pool/stable/amd64/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
       dest: /tmp/docker-ce_17.12.0~ce-0~ubuntu_amd64.deb
