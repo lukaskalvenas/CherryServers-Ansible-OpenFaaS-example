@@ -36,7 +36,7 @@
   - apt:
       update_cache: yes
   - apt:
-      name: "{{ package }}"   
+      name: "{{ packages }}"   
     vars:
       packages:
         - git
@@ -102,7 +102,7 @@
   - apt:
       update_cache: yes
   - apt:
-      name: "{{ package }}"   
+      name: "{{ packages }}"   
     vars:
       packages:
         - git
