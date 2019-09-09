@@ -33,7 +33,8 @@
   hosts: master_server
   tasks:
   - shell: "while sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 1; done;"      
-  - shell: sudo apt update
+  - apt:
+      update_cache: yes
   - apt:
       name: "{{ package }}"   
     vars:
@@ -98,7 +99,8 @@
   remote_user: root
   hosts: worker_server
   tasks:
-  - shell: sudo apt update
+  - apt:
+      update_cache: yes
   - apt:
       name: "{{ package }}"   
     vars:
