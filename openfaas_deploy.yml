@@ -17,7 +17,7 @@
       count: "{{ number_of_masters }}"
       count_offset: 1
       ssh_label:
-        - openfaas_ansible
+        - lukas_ansible
     register: master
 
   - name: Register master node
@@ -81,7 +81,7 @@
       count: "{{ number_of_workers }}"
       count_offset: 1
       ssh_label:
-        - openfaas_ansible
+        - lukas_ansible
     register: worker
 
   - name: Register first worker node
