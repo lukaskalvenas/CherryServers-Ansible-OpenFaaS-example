@@ -5,6 +5,6 @@
   tasks:
   - name: Add SSH key
     cherryservers_sshkey:
-      label: "openfaas_ansible"
+      label: "lukas_ansible"
       key_file: "{{ key_file }}.pub"
       state: present
