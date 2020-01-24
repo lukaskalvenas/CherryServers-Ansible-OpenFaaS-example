@@ -2,8 +2,8 @@ project_id: 88721
 plan_id: 161
 region: EU-East-1
 number_of_masters: 1
-number_of_workers: 2
-image: 'Ubuntu 16.04 64bit'
+number_of_workers: 3
+image: 'Ubuntu 18.04 64bit'
 key_file: '/home/lukas/.ssh/id_rsa'
 key_file_pub: "{{ key_file }}.pub"
 master_hostname: master.node%02d
