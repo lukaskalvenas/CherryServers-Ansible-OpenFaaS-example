@@ -6,7 +6,7 @@ This example will use Ubuntu as the base operating system to deploy one master n
   <li>The Cherry Servers module connects to Cherry Servers Public API via cherry-python package. You need to install it with pip (this might need to be done as sudo):</li>
   
   ```
-    pip install cherry-python --user
+    pip3 install cherry-python --user
   ```
 </ul>
 
