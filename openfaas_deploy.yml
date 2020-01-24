@@ -64,7 +64,7 @@
       token: "{{ worker_token.stdout }}"
        
 - name: Deploying the worker nodes
-  connection: ssh
+  connection: local
   gather_facts: true
   hosts: localhost
   remote_user: root
